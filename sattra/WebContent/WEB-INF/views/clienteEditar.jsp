@@ -4,14 +4,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Boas Vindas</title>
+<title>Insert title here</title>
 </head>
 <body>
-	<center>		
-		<h2>
-			${mensagem}
-		</h2>
-		<h2>Nesse post aprendemos a configurar o Spring MVC</h2>
-	</center>
+<h2>Formulário de Editar de Cliente</h2>
 </body>
 </html>

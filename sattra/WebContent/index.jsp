@@ -6,25 +6,31 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Página Inicial</title>
 
-
 <script type="text/javascript">
 
-function Redirecionar(){
-	
-	var nomeInformado = prompt("Favor informar um nome: ", "");
-	
-	window.location.href = "sistema/boasvindas?nome=" + nomeInformado;
+function redirecionarCadastrarCliente(){
+		
+	window.location.href = "sistema/paginaCadastroCliente";
 }
+function redirecionarEditarCliente(){
 	
+	window.location.href = "sistema/paginaEditarCliente";
+}	
+function redirecionarInserirCliente(){
+	
+	window.location.href = "sistema/paginaInserirCliente";
+}	
 </script>
 
 </head>
 <body>
 
 	<center>
-		<h2>INICIANDO O SISTEMA EM SPRING MVC</h2>
+		<h2>INICIANDO O SISTEMA SATTRA CADASTRO CLIENTE</h2>
 		<h3>
-			<a href="#" onclick="Redirecionar();">Click aqui para informar o nome</a>
+			<a href="#" onclick="redirecionarCadastrarCliente();">Cadastrar clientes</a><br></br>
+			<a href="#" onclick="redirecionarEditarCliente();">Editar clientes</a><br></br>
+			<a href="#" onclick="redirecionarInserirCliente();">Inserir clientes</a>
 		</h3>
 	</center>
 	
