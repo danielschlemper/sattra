@@ -64,13 +64,9 @@
 			<version>1.1.7</version>
 		</dependency>
 
-		<!-- 
+		<!-- <dependency> <groupId>javax.json</groupId> <artifactId>javax.json-api</artifactId> 
+			<version>1.1.2</version> </dependency> -->
 		<dependency>
-			<groupId>javax.json</groupId>
-			<artifactId>javax.json-api</artifactId>
-			<version>1.1.2</version>
-		</dependency>  -->
-		<dependency> 
 			<groupId>org.glassfish</groupId>
 			<artifactId>javax.json</artifactId>
 			<version>1.0.4</version>
@@ -79,6 +75,13 @@
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
 			<version>4.5.5</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/junit/junit -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
 		</dependency>
 
 	</dependencies>

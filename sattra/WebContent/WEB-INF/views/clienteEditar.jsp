@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h2>Formulário de Editar de Cliente</h2>
+<h2></h2>
 </body>
 </html>

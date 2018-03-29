@@ -41,8 +41,8 @@ public class SistemaController {
 		cliente.setEmail("email@gmail.com");		
 		
 		ClienteDAO clienteDAO = new ClienteDAO();
-		clienteDAO.inserirCliente(cliente);
-		
+		//clienteDAO.inserirCliente(cliente);
+		clienteDAO.salvarTXT(cliente);
 		ModelAndView modelAndView = new ModelAndView("clienteEditar");	
 		return modelAndView;
 	}
