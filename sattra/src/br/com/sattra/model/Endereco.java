@@ -2,22 +2,46 @@ package br.com.sattra.model;
 
 public class Endereco {
 
+	private String cep;	
 	private String logradouro;
-	private int numero;
+	private String numero;
 	private String complemento;
 	private String bairro;
 	private String localidade;
 	private String uf;
+	private String ibge;
+	private String gia;
+	private String unidade;
+	
+	
+	public String getIbge() {
+		return ibge;
+	}
+	public void setIbge(String ibge) {
+		this.ibge = ibge;
+	}
+	public String getGia() {
+		return gia;
+	}
+	public void setGia(String gia) {
+		this.gia = gia;
+	}
+	public String getUnidade() {
+		return unidade;
+	}
+	public void setUnidade(String unidade) {
+		this.unidade = unidade;
+	}
 	public String getLogradouro() {
 		return logradouro;
 	}
 	public void setLogradouro(String logradouro) {
 		this.logradouro = logradouro;
 	}
-	public int getNumero() {
+	public String getNumero() {
 		return numero;
 	}
-	public void setNumero(int numero) {
+	public void setNumero(String numero) {
 		this.numero = numero;
 	}
 	public String getComplemento() {
@@ -44,6 +68,11 @@ public class Endereco {
 	public void setUf(String uf) {
 		this.uf = uf;
 	}
-	
+	public String getCep() {
+		return cep;
+	}
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
 	
 }

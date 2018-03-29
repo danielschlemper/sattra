@@ -20,6 +20,10 @@ function redirecionarInserirCliente(){
 	
 	window.location.href = "sistema/paginaInserirCliente";
 }	
+function redirecionarBuscarEndereco(){
+	
+	window.location.href = "endereco/paginaBuscarEndereco";
+}	
 </script>
 
 </head>
@@ -30,7 +34,8 @@ function redirecionarInserirCliente(){
 		<h3>
 			<a href="#" onclick="redirecionarCadastrarCliente();">Cadastrar clientes</a><br></br>
 			<a href="#" onclick="redirecionarEditarCliente();">Editar clientes</a><br></br>
-			<a href="#" onclick="redirecionarInserirCliente();">Inserir clientes</a>
+			<a href="#" onclick="redirecionarInserirCliente();">Inserir clientes</a></br>
+			<a href="#" onclick="redirecionarBuscarEndereco();">Buscar Endereco</a>
 		</h3>
 	</center>
 	

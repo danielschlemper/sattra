@@ -17,9 +17,10 @@ import org.springframework.web.servlet.ModelAndView;
 import br.com.sattra.model.Cliente;
 
 @Controller
+@RequestMapping("/cliente")
 public class ClienteController {
 
-	@RequestMapping(value = "/cliente", method = RequestMethod.GET)
+	@RequestMapping(value = "/cadastroCliente", method = RequestMethod.GET)
 	public ModelAndView cliente() {		
 		return new ModelAndView("cliente", "command", new Cliente());
 	}

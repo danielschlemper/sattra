@@ -24,6 +24,12 @@ public class SistemaController {
 		ModelAndView modelAndView = new ModelAndView("clienteEditar");	
 		return modelAndView;
 	}
+	@RequestMapping(value = "/paginaBuscarEndereco", method = RequestMethod.GET)
+	public ModelAndView paginaBuscarEndereco() {
+
+		ModelAndView modelAndView = new ModelAndView("buscarEndereco");	
+		return modelAndView;
+	}
 	@RequestMapping(value = "/paginaInserirCliente", method = RequestMethod.GET)
 	public ModelAndView paginaInserirCliente() {
 
