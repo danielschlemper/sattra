@@ -7,7 +7,7 @@
 </head>
 <body>
 	<h2>Formulário de Cadastro de Cliente</h2>
-	<form:form method="POST" modelAttribute="cliente" action="/cliente/addCliente" >
+	<form:form method="POST"  action="cadastroCliente" >
 		<table>
 			<tr>
 				<td><form:label path="nome">Nome</form:label></td>

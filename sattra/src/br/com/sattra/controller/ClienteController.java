@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,13 +21,22 @@ import br.com.sattra.model.Cliente;
 @RequestMapping("/cliente")
 public class ClienteController {
 
-	@RequestMapping(value = "/cadastroCliente", method = RequestMethod.GET)
-	public ModelAndView cliente() {		
-		return new ModelAndView("cliente", "command", new Cliente());
-	}
+	@RequestMapping(value = "/paginaCadastroCliente", method = RequestMethod.GET)
+	public ModelAndView paginaCadastroCliente() {
 
-	@RequestMapping(value = "/addCliente", method = RequestMethod.POST)
-	public String adicionarCliente(@ModelAttribute("SpringWeb") Cliente cliente,  ModelMap model,
+		ModelAndView modelAndView = new ModelAndView("cliente", "command", new Cliente());		
+		return modelAndView;
+	}
+	
+//antigo redirecionamento para cliente (arquivo cliente_old) sem Model
+//	@RequestMapping(value = "/cliente", method = RequestMethod.GET)
+//	public String formCliente() {	
+//
+//		return "cliente";
+//	}
+
+	@RequestMapping(value = "/cadastroCliente", method = RequestMethod.POST)
+	public String adicionarCliente(@ModelAttribute("cliente") Cliente cliente,  ModelMap model,
 			HttpServletRequest request) {
 		
 		  
@@ -53,7 +63,7 @@ public class ClienteController {
 	}
 
 	@RequestMapping(value = "/listaClientes", method = RequestMethod.GET)
-	public String listarClientes(@ModelAttribute("SpringWeb") ModelMap model, HttpServletRequest request) {
+	public String listarClientes(@ModelAttribute("cliente") ModelMap model, HttpServletRequest request) {
 
 		List<Cliente> clientes = (List<Cliente>) request.getAttribute("clientes");
 

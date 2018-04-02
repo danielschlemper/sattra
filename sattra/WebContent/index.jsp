@@ -10,7 +10,7 @@
 
 function redirecionarCadastrarCliente(){
 		
-	window.location.href = "sistema/paginaCadastroCliente";
+	window.location.href = "cliente/paginaCadastroCliente";
 }
 function redirecionarEditarCliente(){
 	

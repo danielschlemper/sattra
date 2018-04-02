@@ -8,7 +8,7 @@ public class Cliente {
      private String contatos;
      private String telefone;
      private String email;
-     private Endereco endereco;
+     //private Endereco endereco;
    
       
      public String getNome() {
@@ -49,13 +49,13 @@ public class Cliente {
          this.email = email;
     }
       
-     public Endereco getEndereco() {
-          return endereco;
-     }
+    // public Endereco getEndereco() {
+     //     return endereco;
+    // }
       
-     public void setEndereco(Endereco endereco) {
-          this.endereco = endereco;
-     }
+    // public void setEndereco(Endereco endereco) {
+   //       this.endereco = endereco;
+   //  }
       
      public static String inserirCliente() {
     	 
