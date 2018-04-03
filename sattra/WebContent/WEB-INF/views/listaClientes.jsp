@@ -6,7 +6,22 @@
 </head>
 <body>
     <h2>Lista de Clientes Cadastrados</h2>
+    
+    
   
+  <form:form method="GET"  action="listarCliente" >
+		<table>		
+			<tr>
+				<td><form:label path="cpf">CPF:</form:label></td>
+				<td><form:input path="cpf" /></td>
+			</tr>
+		
+		<tr>
+				<td colspan="2"><input type="submit" value="Pesquisar" /></td>
+		</tr>
+		</table>
+</form:form>
+			
     <c:if test="${not empty clientes}">
         <table>
             <tr>

@@ -54,8 +54,7 @@ public class ClienteWs {
         	 endereco.setUf(jsonObject.getString("uf"));
         	 endereco.setUnidade(jsonObject.getString("unidade"));
         	 endereco.setIbge(jsonObject.getString("ibge"));
-        	 endereco.setGia(jsonObject.getString("gia"));
-        	
+        	 endereco.setGia(jsonObject.getString("gia"));        	
         }
        
         return endereco;

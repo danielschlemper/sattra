@@ -24,11 +24,40 @@
 			<tr>
 			<tr>
 				<td><form:label path="telefone">Telefone:</form:label></td>
-				<td><form:textarea path="telefone" /></td>
+				<td><form:input path="telefone" /></td>
 			</tr>
 			<tr>
 				<td><form:label path="email">Email:</form:label></td>
-				<td><form:textarea path="email" /></td>
+				<td><form:input path="email" /></td>
+			</tr>
+				<tr>
+				<td><form:label path="endereco.cep">cep:</form:label></td>
+				<td><form:input path="endereco.cep" /></td>
+				<td><input type="submit" value="Buscar Cep" /></td>
+			</tr>
+			<tr>
+				<td><form:label path="endereco.logradouro">logradouro:</form:label></td>
+				<td><form:input path="endereco.logradouro" /></td>
+			</tr>
+			<tr>
+				<td><form:label path="endereco.numero">numero:</form:label></td>
+				<td><form:input path="endereco.numero" /></td>
+			</tr>
+			<tr>
+				<td><form:label path="endereco.complemento">complemento:</form:label></td>
+				<td><form:input path="endereco.complemento" /></td>
+			</tr>
+			<tr>
+				<td><form:label path="endereco.bairro">bairro:</form:label></td>
+				<td><form:input path="endereco.bairro" /></td>
+			</tr>
+			<tr>
+				<td><form:label path="endereco.localidade">localidade:</form:label></td>
+				<td><form:input path="endereco.localidade" /></td>
+			</tr>
+			<tr>
+				<td><form:label path="endereco.uf">uf:</form:label></td>
+				<td><form:input path="endereco.uf" /></td>
 			</tr>
 			<tr>
 				<td colspan="2"><input type="submit" value="Submit" /></td>

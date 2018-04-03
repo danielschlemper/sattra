@@ -14,11 +14,11 @@ function redirecionarCadastrarCliente(){
 }
 function redirecionarEditarCliente(){
 	
-	window.location.href = "sistema/paginaEditarCliente";
+	window.location.href = "cliente/buscaCliente";
 }	
-function redirecionarInserirCliente(){
+function redirecionarListarClientes(){
 	
-	window.location.href = "sistema/paginaInserirCliente";
+	window.location.href = "cliente/listaClientes";
 }	
 function redirecionarBuscarEndereco(){
 	
@@ -34,7 +34,7 @@ function redirecionarBuscarEndereco(){
 		<h3>
 			<a href="#" onclick="redirecionarCadastrarCliente();">Cadastrar clientes</a><br></br>
 			<a href="#" onclick="redirecionarEditarCliente();">Editar clientes</a><br></br>
-			<a href="#" onclick="redirecionarInserirCliente();">Inserir clientes</a></br>
+			<a href="#" onclick="redirecionarListarClientes();">Listar clientes</a></br>
 			<a href="#" onclick="redirecionarBuscarEndereco();">Buscar Endereco</a>
 		</h3>
 	</center>

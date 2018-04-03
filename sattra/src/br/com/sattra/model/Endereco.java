@@ -13,7 +13,18 @@ public class Endereco {
 	private String gia;
 	private String unidade;
 	
-	
+	public String getCep() {
+		return cep;
+	}
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
+	public String getLogradouro() {
+		return logradouro;
+	}
+	public void setLogradouro(String logradouro) {
+		this.logradouro = logradouro;
+	}
 	public String getIbge() {
 		return ibge;
 	}
@@ -32,12 +43,7 @@ public class Endereco {
 	public void setUnidade(String unidade) {
 		this.unidade = unidade;
 	}
-	public String getLogradouro() {
-		return logradouro;
-	}
-	public void setLogradouro(String logradouro) {
-		this.logradouro = logradouro;
-	}
+	
 	public String getNumero() {
 		return numero;
 	}
@@ -68,11 +74,6 @@ public class Endereco {
 	public void setUf(String uf) {
 		this.uf = uf;
 	}
-	public String getCep() {
-		return cep;
-	}
-	public void setCep(String cep) {
-		this.cep = cep;
-	}
+	
 	
 }

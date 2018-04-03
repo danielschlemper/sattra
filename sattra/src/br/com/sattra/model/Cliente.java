@@ -1,14 +1,20 @@
 package br.com.sattra.model;
 
-public class Cliente {
+import java.io.Serializable;
+
+public class Cliente implements Serializable {
       
 	
-     private String nome;
+     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String nome;
      private long cpf;
      private String contatos;
      private String telefone;
      private String email;
-     //private Endereco endereco;
+     private Endereco endereco;
    
       
      public String getNome() {
@@ -49,17 +55,22 @@ public class Cliente {
          this.email = email;
     }
       
-    // public Endereco getEndereco() {
-     //     return endereco;
-    // }
+     public Endereco getEndereco() {
+         return endereco;
+     }
       
-    // public void setEndereco(Endereco endereco) {
-   //       this.endereco = endereco;
-   //  }
+    public void setEndereco(Endereco endereco) {
+         this.endereco = endereco;
+     }
       
      public static String inserirCliente() {
     	 
     	 String sql = "INSERT INTO cliente (nome, contatos, cpf, telefone, email) VALUES (?,?,?,?,?);";
+    	 return sql;
+     }
+  public static String listarCliente() {
+    	 
+    	 String sql = "SELECT nome, contatos, cpf, telefone, email FROM cliente ;";
     	 return sql;
      }
 }
