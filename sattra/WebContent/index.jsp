@@ -12,6 +12,10 @@ function redirecionarCadastrarCliente(){
 		
 	window.location.href = "cliente/paginaCadastroCliente";
 }
+function redirecionarExcluirCliente(){
+	
+	window.location.href = "cliente/paginaExcluirCliente";
+}
 function redirecionarEditarCliente(){
 	
 	window.location.href = "cliente/buscaCliente";
@@ -34,6 +38,7 @@ function redirecionarBuscarEndereco(){
 		<h3>
 			<a href="#" onclick="redirecionarCadastrarCliente();">Cadastrar clientes</a><br></br>
 			<a href="#" onclick="redirecionarEditarCliente();">Editar clientes</a><br></br>
+			<a href="#" onclick="redirecionarExcluirCliente();">Excluir clientes</a><br></br>
 			<a href="#" onclick="redirecionarListarClientes();">Listar clientes</a></br>
 			<a href="#" onclick="redirecionarBuscarEndereco();">Buscar Endereco</a>
 		</h3>

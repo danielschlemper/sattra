@@ -31,7 +31,35 @@ public class ClienteDAO {
 			e.printStackTrace();
 		}
 	}
-
+	public void atualizarCliente(Cliente cliente) {
+		try {
+			PreparedStatement preparedStatement = ConexaoDAO.getConection().prepareStatement(Cliente.atualizarCliente());
+			preparedStatement.setString(1, cliente.getNome());
+			preparedStatement.setString(2, cliente.getContatos());
+			preparedStatement.setString(3, cliente.getCpf());
+			preparedStatement.setString(4, cliente.getTelefone());
+			preparedStatement.setString(5, cliente.getEmail());
+			preparedStatement.setLong(6, cliente.getEndereco().getCodEndereco());
+			preparedStatement.setString(7, cliente.getCpf());
+			preparedStatement.executeUpdate();
+			preparedStatement.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public void excluirCliente(long cpf) {
+		try {
+			PreparedStatement preparedStatement = ConexaoDAO.getConection().prepareStatement(Cliente.deletarCliente());		
+			preparedStatement.setLong(1, cpf);		
+			preparedStatement.executeUpdate();
+			preparedStatement.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public List<Cliente> buscarCliente(long cpf) {
 		List<Cliente> clientes = new ArrayList<Cliente>();
 		PreparedStatement pstm = null;
@@ -47,8 +75,7 @@ public class ClienteDAO {
 		        	cliente.setEmail(rs.getString("email"));
 		        	cliente.setNome(rs.getString("nome"));
 		        	cliente.setTelefone(rs.getString("telefone"));
-		            clientes.add(cliente);
-		            System.out.println("Entrou consulta "+cliente.getNome());
+		            clientes.add(cliente);	          
 		        }
 		        pstm.close();
 			

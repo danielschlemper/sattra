@@ -29,66 +29,71 @@ import br.com.sattra.viacep.ClienteWs;
 public class ClienteController {
 
 	boolean cepVerificado = false;
+	Long codClienteAtualizar;
 
 	@RequestMapping(value = "/paginaCadastroCliente", method = RequestMethod.GET)
 	public ModelAndView paginaCadastroCliente() {
 		Cliente cliente = new Cliente();
-		ModelAndView modelAndView = new ModelAndView("cliente", "command", cliente);	
+		ModelAndView modelAndView = new ModelAndView("cliente", "command", cliente);
 		return modelAndView;
 	}
-	@RequestMapping(value = "/listaClientes", method = RequestMethod.GET)
-	public ModelAndView paginaListarCliente(@RequestParam(value = "cpf", required = false) Long cpf, ModelMap model) {
+	@RequestMapping(value = "/paginaExcluirCliente", method = RequestMethod.GET)
+	public ModelAndView paginaExcluirCliente() {	
+		Cliente cliente = new Cliente();
+		ModelAndView modelAndView = new ModelAndView("excluirCliente", "command", cliente);
+		return modelAndView;
+	}
 
+	@RequestMapping(value = "/listaClientes", method = RequestMethod.GET)
+	public ModelAndView paginaListarCliente(ModelMap model) {
+
+		
 		ModelAndView modelAndView = new ModelAndView("listaClientes");
-		modelAndView.addAllObjects(model);
-		if(cpf != null) {
-			ClienteDAO clienteDAO = new ClienteDAO();
-			List<Cliente> clientes = clienteDAO.buscarCliente();				
-			model.addAttribute("clientes", clientes);
-		}					
+		ClienteDAO clienteDAO = new ClienteDAO();
+		List<Cliente> clientes = clienteDAO.buscarCliente();
+		model.addAttribute("clientes", clientes);
 		modelAndView.addAllObjects(model);
 		return modelAndView;
 	}
+
 	@RequestMapping(value = "/cadastroCliente", method = RequestMethod.POST)
 	public ModelAndView adicionarCliente(@ModelAttribute("cliente") Cliente cliente, ModelMap model,
 			HttpServletRequest request) {
 
-		boolean deuErro = false;	
-		try {			
-			Validation.validaCPF(cliente.getCpf());			
-		}
-		catch(CPFValidationException cpfException) {						
-			model.addAttribute("error_cpc", cpfException.getMessage());	
+		boolean deuErro = false;
+		try {
+			Validation.validaCPF(cliente.getCpf());
+		} catch (CPFValidationException cpfException) {
+			model.addAttribute("error_cpf", cpfException.getMessage());
 			deuErro = true;
 		}
 		if ((cliente.getEndereco().getCep() != null || cliente.getEndereco().getCep() != "") && !cepVerificado) {
 			try {
 				Endereco endereco = ClienteWs.getEnderecoPorCep(cliente.getEndereco().getCep());
-				cliente.setEndereco(endereco);	
+				cliente.setEndereco(endereco);
 				ModelAndView modelAndView = new ModelAndView("cliente", "command", cliente);
 				modelAndView.addAllObjects(model);
 				cepVerificado = true;
-				if(endereco == null) {
+				if (endereco == null) {
 					cepVerificado = false;
 				}
-				return modelAndView;				
-			}
-			catch (Exception e) {
+				return modelAndView;
+			} catch (Exception e) {
 				// TODO: handle exception
-				model.addAttribute("error_cep", "Endereco não encontrado");	
+				model.addAttribute("error_cep", "Endereco não encontrado");
 				deuErro = true;
 				cepVerificado = false;
-			}			
+			}
 		}
-		if(deuErro) {
+		if (deuErro) {
 			ModelAndView modelAndView = new ModelAndView("cliente", "command", cliente);
 			modelAndView.addAllObjects(model);
 			return modelAndView;
 		}
-		
+
 		ClienteDAO clienteDAO = new ClienteDAO();
 		EnderecoDAO enderecoDAO = new EnderecoDAO();
-		System.out.println("Endereco:"+ cliente.getEndereco().getCep());
+		System.out.println("Endereco:" + cliente.getEndereco().getCep());
 		enderecoDAO.inserirEndereco(cliente.getEndereco());
 		Long codEndereco = Long.valueOf(enderecoDAO.ultimoEnderecoInserido());
 		cliente.getEndereco().setCodEndereco(codEndereco);
@@ -100,55 +105,52 @@ public class ClienteController {
 		model.addAttribute("contatos", cliente.getContatos());
 		model.addAttribute("email", cliente.getEmail());
 		model.addAttribute("telefone", cliente.getTelefone());
-		model.addAttribute("logradouro", cliente.getNome());
-		model.addAttribute("numero", cliente.getCpf());
-		model.addAttribute("complemento", cliente.getContatos());
-		model.addAttribute("bairro", cliente.getEmail());
-		model.addAttribute("localidade", cliente.getTelefone());
-		model.addAttribute("uf", cliente.getTelefone());
+		model.addAttribute("logradouro", cliente.getEndereco().getLogradouro());
+		model.addAttribute("numero", cliente.getEndereco().getNumero());
+		model.addAttribute("complemento", cliente.getEndereco().getComplemento());
+		model.addAttribute("bairro", cliente.getEndereco().getBairro());
+		model.addAttribute("localidade", cliente.getEndereco().getLocalidade());
+		model.addAttribute("uf", cliente.getEndereco().getUf());
 		ModelAndView modelAndView = new ModelAndView("exibeCliente", "command", cliente);
-		return modelAndView;		
+		return modelAndView;
 	}
-	
+
 	@RequestMapping(value = "/buscaCliente", method = RequestMethod.GET)
 	public ModelAndView buscarCliente(@RequestParam(value = "cpf", required = false) Long cpf, ModelMap model) {
 
 		Cliente cliente = new Cliente();
-		if(cpf !=null) {
-			ClienteDAO clienteDAO = new ClienteDAO();		
-			List<Cliente> clientes = clienteDAO.buscarCliente(cpf);			
-			if(clientes.size() > 0) {
+		if (cpf != null) {
+			ClienteDAO clienteDAO = new ClienteDAO();
+			List<Cliente> clientes = clienteDAO.buscarCliente(cpf);
+			if (clientes.size() > 0) {
 				cliente = clientes.get(0);
-			}		
-			else {
+			} else {
 				model.addAttribute("error", "Cliente não encontrado");
 			}
-		}		
+		}
+		codClienteAtualizar=cpf; 
 		ModelAndView modelAndView = new ModelAndView("editarCliente", "command", cliente);
 		modelAndView.addAllObjects(model);
 		return modelAndView;
 	}
-	@RequestMapping(value = "/buscaCliente", method = RequestMethod.POST)
-	public ModelAndView editarCliente(@RequestParam(value = "cpf", required = false) Long cpf, ModelMap model) {
+	@RequestMapping(value = "/excluirCliente", method = RequestMethod.GET)
+	public ModelAndView excluirCliente(@RequestParam(value = "cpf", required = false) Long cpf, ModelMap model) {
 
 		Cliente cliente = new Cliente();
-		if(cpf !=null) {
+		if (cpf != null) {
 			ClienteDAO clienteDAO = new ClienteDAO();
-			List<Cliente> clientes = clienteDAO.buscarCliente(cpf);
-			if(clientes.size() > 0) {
-				cliente = clientes.get(0);
-			}						
+			clienteDAO.excluirCliente(cpf);			
 		}		
-		ModelAndView modelAndView = new ModelAndView("editarCliente", "command", cliente);		
+		ModelAndView modelAndView = new ModelAndView("excluirCliente", "command", cliente);
+		modelAndView.addAllObjects(model);
 		return modelAndView;
 	}
-	
 	@RequestMapping(value = "/editarCliente", method = RequestMethod.POST)
 	public ModelAndView editarCliente(@ModelAttribute("cliente") Cliente cliente, ModelMap model,
-			HttpServletRequest request) {	
+			HttpServletRequest request) {
 
 		ClienteDAO clienteDAO = new ClienteDAO();
-		clienteDAO.inserirCliente(cliente);
+		clienteDAO.atualizarCliente(cliente);
 
 		/// model.addAttribute("endereco", cliente.getEndereco());
 		model.addAttribute("nome", cliente.getNome());
@@ -156,14 +158,14 @@ public class ClienteController {
 		model.addAttribute("contatos", cliente.getContatos());
 		model.addAttribute("email", cliente.getEmail());
 		model.addAttribute("telefone", cliente.getTelefone());
-		model.addAttribute("logradouro", cliente.getNome());
-		model.addAttribute("numero", cliente.getCpf());
-		model.addAttribute("complemento", cliente.getContatos());
-		model.addAttribute("bairro", cliente.getEmail());
-		model.addAttribute("localidade", cliente.getTelefone());
-		model.addAttribute("uf", cliente.getTelefone());
+		model.addAttribute("logradouro", cliente.getEndereco().getLogradouro());
+		model.addAttribute("numero", cliente.getEndereco().getNumero());
+		model.addAttribute("complemento", cliente.getEndereco().getComplemento());
+		model.addAttribute("bairro", cliente.getEndereco().getBairro());
+		model.addAttribute("localidade", cliente.getEndereco().getLocalidade());
+		model.addAttribute("uf", cliente.getEndereco().getUf());
 		ModelAndView modelAndView = new ModelAndView("exibeCliente", "command", cliente);
-		return modelAndView;		
+		return modelAndView;
 	}
 	// antigo redirecionamento para cliente (arquivo cliente_old) sem Model
 	// @RequestMapping(value = "/cliente", method = RequestMethod.GET)

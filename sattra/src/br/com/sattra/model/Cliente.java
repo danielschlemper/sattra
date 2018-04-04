@@ -75,11 +75,26 @@ public class Cliente implements Serializable {
     	 String sql = "INSERT INTO cliente (nome, contatos, cpf, telefone, email, cod_endereco) VALUES (?,?,?,?,?,?);";
     	 return sql;
      }
+     
      public static String listarCliente() {
     	 
     	 String sql = "SELECT nome, contatos, cpf, telefone, email FROM cliente ";
     	 return sql;
      }
+     
+     public static String atualizarCliente() {
+    	 
+    	 String sql = "UPDATE cliente set nome=?, contatos=?, cpf=?, telefone=?, email=?, cod_endereco=? WHERE cpf=?";
+    	 return sql;
+     }
+   public static String deletarCliente() {
+    	 
+    	 String sql = "DELETE FROM cliente WHERE cpf=?;";
+    	 return sql;
+     }
+     
+     
+     
      @Override
      public String toString() {
      return "Cliente:" + getNome()  +" CPF:" + getCpf();

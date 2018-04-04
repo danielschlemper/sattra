@@ -16,11 +16,11 @@
             </tr>
   
          
-            <c:forEach var="listValue" items="${clientes}">
+            <c:forEach var="cliente" items="${clientes}">
                  
                 <tr>
-                    <td>${listValue.nome}</td>                   
-                    <td>${listValue.telefone}</td>
+                    <td>${cliente.nome}</td>                   
+                    <td>${cliente.telefone}</td>
                                                     
                 </tr>
             </c:forEach>
