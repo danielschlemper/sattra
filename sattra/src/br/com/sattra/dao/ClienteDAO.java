@@ -20,9 +20,10 @@ public class ClienteDAO {
 			PreparedStatement preparedStatement = ConexaoDAO.getConection().prepareStatement(Cliente.inserirCliente());
 			preparedStatement.setString(1, cliente.getNome());
 			preparedStatement.setString(2, cliente.getContatos());
-			preparedStatement.setLong(3, cliente.getCpf());
+			preparedStatement.setString(3, cliente.getCpf());
 			preparedStatement.setString(4, cliente.getTelefone());
 			preparedStatement.setString(5, cliente.getEmail());
+			preparedStatement.setLong(6, cliente.getEndereco().getCodEndereco());
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
 		} catch (SQLException e) {
@@ -35,17 +36,43 @@ public class ClienteDAO {
 		List<Cliente> clientes = new ArrayList<Cliente>();
 		PreparedStatement pstm = null;
 		try {
-			if(cpf!=0) {
-				pstm = ConexaoDAO.getConection().prepareStatement(Cliente.listarCliente() + "WHERE cpf=?");
-			}
-			else {
-				pstm = ConexaoDAO.getConection().prepareStatement(Cliente.listarCliente());
-			}
+			
+			pstm = ConexaoDAO.getConection().prepareStatement(Cliente.listarCliente() + " WHERE cpf=?;");
+			pstm.setLong(1, cpf);
 			ResultSet rs = pstm.executeQuery();
 		        while (rs.next()) {
 		        	Cliente cliente = new Cliente();
 		        	cliente.setContatos(rs.getString("contatos"));
-		        	cliente.setCpf(rs.getLong("cpf"));
+		        	cliente.setCpf(rs.getString("cpf"));
+		        	cliente.setEmail(rs.getString("email"));
+		        	cliente.setNome(rs.getString("nome"));
+		        	cliente.setTelefone(rs.getString("telefone"));
+		            clientes.add(cliente);
+		            System.out.println("Entrou consulta "+cliente.getNome());
+		        }
+		        pstm.close();
+			
+		} catch (SQLException e) {			
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			
+		}			
+		return clientes;
+	}
+	public List<Cliente> buscarCliente() {
+		List<Cliente> clientes = new ArrayList<Cliente>();
+		PreparedStatement pstm = null;
+		
+		try {
+			pstm = ConexaoDAO.getConection().prepareStatement(Cliente.listarCliente());
+			
+			ResultSet rs = pstm.executeQuery();
+		        while (rs.next()) {
+		        	Cliente cliente = new Cliente();
+		        	cliente.setContatos(rs.getString("contatos"));
+		        	cliente.setCpf(rs.getString("cpf"));
 		        	cliente.setEmail(rs.getString("email"));
 		        	cliente.setNome(rs.getString("nome"));
 		        	cliente.setTelefone(rs.getString("telefone"));

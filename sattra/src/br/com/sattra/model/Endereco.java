@@ -2,6 +2,7 @@ package br.com.sattra.model;
 
 public class Endereco {
 
+	private long codEndereco;
 	private String cep;	
 	private String logradouro;
 	private String numero;
@@ -13,6 +14,12 @@ public class Endereco {
 	private String gia;
 	private String unidade;
 	
+	public long getCodEndereco() {
+		return codEndereco;
+	}
+	public void setCodEndereco(long codEndereco) {
+		this.codEndereco = codEndereco;
+	}
 	public String getCep() {
 		return cep;
 	}
@@ -75,5 +82,10 @@ public class Endereco {
 		this.uf = uf;
 	}
 	
+	public static String inserirEndereco() {
+		String sql = "INSERT INTO endereco (cep, logradouro, numero, complemento, bairro, localidade, uf, ibge, guia, unidade)" +
+					" VALUES (?,?,?,?,?,?,?,?,?,?)"; 	 	
+		return sql;
+	}
 	
 }

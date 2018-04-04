@@ -1,4 +1,4 @@
-package br.com.sattra.model;
+ package br.com.sattra.model;
 
 import java.io.Serializable;
 
@@ -9,14 +9,21 @@ public class Cliente implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	 private long codCliente;	
 	private String nome;
-     private long cpf;
+     private String cpf;
      private String contatos;
      private String telefone;
      private String email;
      private Endereco endereco;
    
-      
+     public long getCodCliente() {
+ 		return codCliente;
+ 	}
+
+ 	public void setCodCliente(long codCliente) {
+ 		this.codCliente = codCliente;
+ 	}
      public String getNome() {
           return nome;
      }
@@ -32,11 +39,11 @@ public class Cliente implements Serializable {
     public void setContatos(String contatos) {
          this.contatos = contatos;
     }
-     public long getCpf() {
+     public String getCpf() {
           return cpf;
      }
       
-     public void setCpf(long cpf) {
+     public void setCpf(String cpf) {
           this.cpf = cpf;
      }
       
@@ -65,12 +72,16 @@ public class Cliente implements Serializable {
       
      public static String inserirCliente() {
     	 
-    	 String sql = "INSERT INTO cliente (nome, contatos, cpf, telefone, email) VALUES (?,?,?,?,?);";
+    	 String sql = "INSERT INTO cliente (nome, contatos, cpf, telefone, email, cod_endereco) VALUES (?,?,?,?,?,?);";
     	 return sql;
      }
-  public static String listarCliente() {
+     public static String listarCliente() {
     	 
-    	 String sql = "SELECT nome, contatos, cpf, telefone, email FROM cliente ;";
+    	 String sql = "SELECT nome, contatos, cpf, telefone, email FROM cliente ";
     	 return sql;
+     }
+     @Override
+     public String toString() {
+     return "Cliente:" + getNome()  +" CPF:" + getCpf();
      }
 }

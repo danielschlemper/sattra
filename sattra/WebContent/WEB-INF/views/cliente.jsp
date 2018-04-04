@@ -10,6 +10,12 @@
 	<form:form method="POST"  action="cadastroCliente" >
 		<table>
 			<tr>
+				<td colspan="2">${error_cpf}</td>				
+			</tr>
+			<tr>
+				<td colspan="2">${error_cep}</td>				
+			</tr>
+			<tr>
 				<td><form:label path="nome">Nome</form:label></td>
 				<td><form:input path="nome" /></td>
 			</tr>
@@ -60,7 +66,7 @@
 				<td><form:input path="endereco.uf" /></td>
 			</tr>
 			<tr>
-				<td colspan="2"><input type="submit" value="Submit" /></td>
+				<td colspan="2"><input type="submit" value="Salvar" /></td>
 			</tr>
 		</table>
 	</form:form>

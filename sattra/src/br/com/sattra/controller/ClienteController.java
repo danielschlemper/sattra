@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.bind.ParseConversionEvent;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import br.com.sattra.api.Validation;
 import br.com.sattra.dao.ClienteDAO;
+import br.com.sattra.dao.EnderecoDAO;
+import br.com.sattra.exception.CPFValidationException;
 import br.com.sattra.model.Cliente;
 import br.com.sattra.model.Endereco;
 import br.com.sattra.viacep.ClienteWs;
@@ -26,34 +30,68 @@ public class ClienteController {
 
 	boolean cepVerificado = false;
 
+	@RequestMapping(value = "/paginaCadastroCliente", method = RequestMethod.GET)
+	public ModelAndView paginaCadastroCliente() {
+		Cliente cliente = new Cliente();
+		ModelAndView modelAndView = new ModelAndView("cliente", "command", cliente);	
+		return modelAndView;
+	}
 	@RequestMapping(value = "/listaClientes", method = RequestMethod.GET)
-	public ModelAndView paginaListarCliente(@RequestParam(value = "nome", required = false) Long cpf, ModelMap model) {
+	public ModelAndView paginaListarCliente(@RequestParam(value = "cpf", required = false) Long cpf, ModelMap model) {
 
 		ModelAndView modelAndView = new ModelAndView("listaClientes");
 		modelAndView.addAllObjects(model);
 		if(cpf != null) {
 			ClienteDAO clienteDAO = new ClienteDAO();
-			List<Cliente> clientes = clienteDAO.buscarCliente(cpf);				
+			List<Cliente> clientes = clienteDAO.buscarCliente();				
 			model.addAttribute("clientes", clientes);
 		}					
 		modelAndView.addAllObjects(model);
 		return modelAndView;
 	}
-
 	@RequestMapping(value = "/cadastroCliente", method = RequestMethod.POST)
 	public ModelAndView adicionarCliente(@ModelAttribute("cliente") Cliente cliente, ModelMap model,
 			HttpServletRequest request) {
 
+		boolean deuErro = false;	
+		try {			
+			Validation.validaCPF(cliente.getCpf());			
+		}
+		catch(CPFValidationException cpfException) {						
+			model.addAttribute("error_cpc", cpfException.getMessage());	
+			deuErro = true;
+		}
 		if ((cliente.getEndereco().getCep() != null || cliente.getEndereco().getCep() != "") && !cepVerificado) {
-
-			Endereco endereco = ClienteWs.getEnderecoPorCep(cliente.getEndereco().getCep());
-			cliente.setEndereco(endereco);
+			try {
+				Endereco endereco = ClienteWs.getEnderecoPorCep(cliente.getEndereco().getCep());
+				cliente.setEndereco(endereco);	
+				ModelAndView modelAndView = new ModelAndView("cliente", "command", cliente);
+				modelAndView.addAllObjects(model);
+				cepVerificado = true;
+				if(endereco == null) {
+					cepVerificado = false;
+				}
+				return modelAndView;				
+			}
+			catch (Exception e) {
+				// TODO: handle exception
+				model.addAttribute("error_cep", "Endereco não encontrado");	
+				deuErro = true;
+				cepVerificado = false;
+			}			
+		}
+		if(deuErro) {
 			ModelAndView modelAndView = new ModelAndView("cliente", "command", cliente);
-			cepVerificado = true;
+			modelAndView.addAllObjects(model);
 			return modelAndView;
 		}
-
+		
 		ClienteDAO clienteDAO = new ClienteDAO();
+		EnderecoDAO enderecoDAO = new EnderecoDAO();
+		System.out.println("Endereco:"+ cliente.getEndereco().getCep());
+		enderecoDAO.inserirEndereco(cliente.getEndereco());
+		Long codEndereco = Long.valueOf(enderecoDAO.ultimoEnderecoInserido());
+		cliente.getEndereco().setCodEndereco(codEndereco);
 		clienteDAO.inserirCliente(cliente);
 
 		/// model.addAttribute("endereco", cliente.getEndereco());
@@ -73,13 +111,33 @@ public class ClienteController {
 	}
 	
 	@RequestMapping(value = "/buscaCliente", method = RequestMethod.GET)
-	public ModelAndView buscarCliente(@RequestParam(value = "nome", required = false) Long cpf, ModelMap model) {
+	public ModelAndView buscarCliente(@RequestParam(value = "cpf", required = false) Long cpf, ModelMap model) {
+
+		Cliente cliente = new Cliente();
+		if(cpf !=null) {
+			ClienteDAO clienteDAO = new ClienteDAO();		
+			List<Cliente> clientes = clienteDAO.buscarCliente(cpf);			
+			if(clientes.size() > 0) {
+				cliente = clientes.get(0);
+			}		
+			else {
+				model.addAttribute("error", "Cliente não encontrado");
+			}
+		}		
+		ModelAndView modelAndView = new ModelAndView("editarCliente", "command", cliente);
+		modelAndView.addAllObjects(model);
+		return modelAndView;
+	}
+	@RequestMapping(value = "/buscaCliente", method = RequestMethod.POST)
+	public ModelAndView editarCliente(@RequestParam(value = "cpf", required = false) Long cpf, ModelMap model) {
 
 		Cliente cliente = new Cliente();
 		if(cpf !=null) {
 			ClienteDAO clienteDAO = new ClienteDAO();
-			List<Cliente> clientes = clienteDAO.buscarCliente(cpf);	
-			cliente = clientes.get(0);			
+			List<Cliente> clientes = clienteDAO.buscarCliente(cpf);
+			if(clientes.size() > 0) {
+				cliente = clientes.get(0);
+			}						
 		}		
 		ModelAndView modelAndView = new ModelAndView("editarCliente", "command", cliente);		
 		return modelAndView;

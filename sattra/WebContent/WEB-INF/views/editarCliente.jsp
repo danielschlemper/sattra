@@ -7,13 +7,20 @@
 </head>
 <body>
 	<h2>Formulário de Cadastro de Cliente</h2>
-	<form:form method="POST"  action="alterarCliente" >
-		<table>
+	<form:form method="GET"  action="buscaCliente" >
+	<table>
 			<tr>
 			<td><form:label path="cpf">CPF:</form:label></td>
 				<td><form:input path="cpf" /></td>
 				<td><input type="submit" value="Buscar CPF" /></td>				
 			</tr>
+			<tr>
+				<td colspan="2">${error}</td>				
+			</tr>
+			</table>
+	</form:form>
+	<form:form method="POST"  action="editarCliente" >
+		<table>		
 			<tr>
 				<td><form:label path="nome">Nome</form:label></td>
 				<td><form:input path="nome" /></td>

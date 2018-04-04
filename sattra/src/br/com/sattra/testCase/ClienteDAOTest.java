@@ -27,7 +27,7 @@ public class ClienteDAOTest {
 		Cliente cliente = new Cliente();
 		cliente.setNome("Daniel");
 		cliente.setContatos("Pessoa 1 e 2");
-		cliente.setCpf(123456789);
+		cliente.setCpf("123456789");
 		cliente.setTelefone("32611111");
 		cliente.setEmail("email@gmail.com");
 		
